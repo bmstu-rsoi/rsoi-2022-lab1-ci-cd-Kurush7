@@ -60,6 +60,11 @@ if __name__ == "__main__":
     host = config['app']['host']
     port = config['app']['port']
 
+    import os
+    ON_HEROKU = os.environ.get('ITS_HEROKU')
+    if ON_HEROKU:
+        port = int(os.environ.get('PORT', 5000))
+
     server = PersonServer()
     server.init_server(config['app'])
     server.connect_repository(config['database'])
