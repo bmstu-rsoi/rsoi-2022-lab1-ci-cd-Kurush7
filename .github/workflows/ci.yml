@@ -18,14 +18,14 @@ jobs:
           python-version: "3.8"
 
       - name: Run Unit Tests
-      - run: |
+        run: |
           python -m pip install --upgrade pip
           pip install pytest
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           pytest
 
       - name: Deploy project
-      - uses: akhileshns/heroku-deploy@v3.12.12
+        uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: rsoi-lab1-2022-kazakov
