@@ -1,8 +1,8 @@
 app:
   app_name: PersonService
   debug: false
-  host: localhost # todo
-  port: 5000
+  host: localhost
+  port: 8080
   logging:
     logger_name: PersonServiceLogger
     app_name: PersonService
@@ -15,7 +15,7 @@ database:
   dbname: persons
   username: program
   password: test
-  host: localhost # todo
+  host: localhost
   port: 5432
   logging:
     logger_name: DatabaseLogger
