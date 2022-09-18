@@ -12,10 +12,10 @@ app:
 
 database:
   connector: postgres
-  dbname: persons
-  username: program
-  password: test
-  host: localhost # todo
+  dbname: dd4d7no392rbp4
+  username: ogocaczlderrhl
+  password: 98011ddfd44808f38f570dfdedd1f7e48cfedde2700661640b93e2c385137217
+  host: ec2-35-170-146-54.compute-1.amazonaws.com
   port: 5432
   logging:
     logger_name: DatabaseLogger
