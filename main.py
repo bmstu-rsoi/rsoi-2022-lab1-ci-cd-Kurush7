@@ -2,8 +2,8 @@ from qr_server.Server import MethodResult, QRContext
 from qr_server.Config import QRYamlConfig
 from qr_server.FlaskServer import FlaskServer
 
-from repository import PersonRepository
-from person_dtos import *
+from src.repository import PersonRepository
+from src.person_dtos import *
 
 
 def list_persons(ctx: QRContext):
@@ -25,12 +25,15 @@ def create_person(ctx: QRContext):
     if id is None:
         return MethodResult('failed to create person', 400)
 
-    return MethodResult('ok', 201)
+    return MethodResult('ok', 201, headers={'Location': f'/api/v1/persons/{id}'})
+
 
 def update_person(ctx: QRContext, id: int):
     data = ctx.json_data
 
-    ctx.repository.update_person(id, data)
+    ok = ctx.repository.update_person(id, data)
+    if not ok:
+        return MethodResult('failed to update person', 400)
     person = ctx.repository.get_person(id)
     if person is None:
         return MethodResult('person not found', 404)

@@ -1,9 +1,27 @@
+from abc import abstractmethod
 from functools import reduce
 
 import qr_server.Repository as rep
 
 
-class PersonRepository(rep.QRRepository):
+class IPersonRepository:
+    @abstractmethod
+    def get_persons(self): pass
+
+    @abstractmethod
+    def get_person(self, id): pass
+
+    @abstractmethod
+    def create_person(self, data): pass
+
+    @abstractmethod
+    def update_person(self, id, data): pass
+
+    @abstractmethod
+    def delete_person(self, id): pass
+
+
+class PersonRepository(IPersonRepository, rep.QRRepository):
     def __init__(self):
         super().__init__()
 
@@ -13,10 +31,10 @@ class PersonRepository(rep.QRRepository):
         persons = self.db.select(self.db.persons).all()
         return persons
 
-    def get_person(self, user_id):
+    def get_person(self, id):
         if self.db is None:
             raise Exception('DBAdapter not connected to database')
-        person = self.db.select(self.db.persons).where(id=user_id).one()
+        person = self.db.select(self.db.persons).where(id=id).one()
         return person
 
     def create_person(self, data):
@@ -28,10 +46,10 @@ class PersonRepository(rep.QRRepository):
         p = self.db.persons
         fields = list(p.meta['fields'].keys())
         fields.remove('id')
-        id = self.db.insert(p, *[p.__dict__[f] for f in fields], auto_commit=True) \
+        data = self.db.insert(p, *[p.__dict__[f] for f in fields], auto_commit=True) \
             .values([data[f] for f in fields]) \
             .returning(p.id).one()
-        return id
+        return data['id']
 
     def update_person(self, id, data):
         if self.db is None:
@@ -43,6 +61,7 @@ class PersonRepository(rep.QRRepository):
         ok = self.db.update(p, auto_commit=True).set(**data).where(id=id).exec()
         if not ok:
             raise Exception('Failed to update person')
+        return ok
 
     def delete_person(self, id):
         if self.db is None:
