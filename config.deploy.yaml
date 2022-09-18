@@ -1,7 +1,7 @@
 app:
   app_name: PersonService
   debug: false
-  host: localhost # todo
+  host: https://rsoi-lab1-2022-kazakov.herokuapp.com
   port: 8080
   logging:
     logger_name: PersonServiceLogger
