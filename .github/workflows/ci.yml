@@ -12,10 +12,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Use python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.8"
+#      - name: Use python
+#        uses: actions/setup-python@v4
+#        with:
+#          python-version: "3.8"
 
       - name: Deploy project
         uses: akhileshns/heroku-deploy@v3.12.12
