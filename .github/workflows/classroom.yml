@@ -3,6 +3,9 @@ on:
   push:
     branches:
       - master
+  pull_request:
+    branches:
+      - master
 jobs:
   build:
     name: Autograding
@@ -11,6 +14,34 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
+
+      - name: Use python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.8"
+
+      - name: Run Unit Tests
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pytest
+
+      - name: Deploy project
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: rsoi-lab1-2022-kazakov
+          heroku_email: ze17@yandex.ru
+          usedocker: true
+
+      - name: Run API Tests
+        uses: matt-ball/newman-action@master
+        with:
+          collection: postman/[inst] Lab1.postman_collection.json
+          environment: postman/[inst][heroku] Lab1.postman_environment.json
+          delayRequest: 100
+          reporters: '[ "cli" ]'
 
       - name: Autograding
         uses: education/autograding@v1
