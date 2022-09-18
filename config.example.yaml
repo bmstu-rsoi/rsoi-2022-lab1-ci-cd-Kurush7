@@ -1,0 +1,25 @@
+app:
+  app_name: PersonService
+  debug: false
+  host: localhost
+  port: 8080
+  logging:
+    logger_name: PersonServiceLogger
+    app_name: PersonService
+    level: info
+    file: person_service.log
+    file_level: info
+
+database:
+  connector: postgres
+  dbname: persons
+  username: program
+  password: test
+  host: localhost
+  port: 5432
+  logging:
+    logger_name: DatabaseLogger
+    app_name: PersonService
+    level: info
+    file: person_service.log
+    file_level: info

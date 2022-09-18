@@ -1,0 +1,25 @@
+app:
+  app_name: PersonService
+  debug: false
+  host: 0.0.0.0
+  port: 5000
+  logging:
+    logger_name: PersonServiceLogger
+    app_name: PersonService
+    level: info
+    file: person_service.log
+    file_level: info
+
+database:
+  connector: postgres
+  dbname: dd4d7no392rbp4
+  username: ogocaczlderrhl
+  password: 98011ddfd44808f38f570dfdedd1f7e48cfedde2700661640b93e2c385137217
+  host: ec2-35-170-146-54.compute-1.amazonaws.com
+  port: 5432
+  logging:
+    logger_name: DatabaseLogger
+    app_name: PersonService
+    level: info
+    file: person_service.log
+    file_level: info
